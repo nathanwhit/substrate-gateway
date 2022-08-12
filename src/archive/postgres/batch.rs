@@ -1017,7 +1017,7 @@ impl IdQuery for EventIdQuery {
             FROM event
             WHERE ($1 OR name = ANY($2))
                 AND block_id > $3 AND ($4 IS null OR block_id < $4)
-            ORDER BY block_id
+            ORDER BY block_id, id
             OFFSET $5
             LIMIT $6";
         let result = sqlx::query_as::<_, (String,)>(query)
@@ -1053,7 +1053,7 @@ impl IdQuery for CallIdQuery {
             FROM call
             WHERE ($1 OR name = ANY($2))
                 AND block_id > $3 AND ($4 IS null OR block_id < $4)
-            ORDER BY block_id
+            ORDER BY block_id, id
             OFFSET $5
             LIMIT $6";
         let result = sqlx::query_as::<_, (String,)>(query)
@@ -1088,7 +1088,7 @@ impl IdQuery for MessageEnqueuedIdQuery {
             FROM event
             WHERE name = 'Gear.MessageEnqueued' AND contract = ANY($1)
                 AND block_id > $2 AND ($3 IS null OR block_id < $3)
-            ORDER BY block_id
+            ORDER BY block_id, id
             OFFSET $4
             LIMIT $5";
         let result = sqlx::query_as::<_, (String,)>(query)
